@@ -6,29 +6,33 @@ import { useEffect, useState } from 'react';
 function App() {
     const [meals, setMeals] = useState([]);
 
+    const burguers = [
+      {
+        id: 0,
+        name: 'Pulp Fiction',
+        count: 0,
+      },
+      {
+        id: 1,
+        name: 'Ultimato',
+        count: 0,
+      },
+      {
+        id: 2,
+        name: 'Cidade de Deus',
+        count: 0,
+      },
+      {
+        id: 3,
+        name: 'Capitão Fantástico',
+        count: 0,
+      },
+    ];
+
     useEffect(() => {
-      const burguers = [
-        {
-          id: 0,
-          name: 'Pulp Fiction',
-          count: 0,
-        },
-        {
-          id: 1,
-          name: 'Últimato',
-          count: 0,
-        },
-        {
-          id: 2,
-          name: 'Cidade de Deus',
-          count: 0,
-        },
-      ];
-
-
       const historicMeals = localStorage.getItem('meals');
 
-      historicMeals ? setMeals(JSON.parse(historicMeals)) : setMeals(burguers);
+      historicMeals ? setMeals(JSON.parse(historicMeals)) : setMeals([...burguers]);
     }, []);
 
   function setCount(index, increment) {
@@ -41,6 +45,12 @@ function App() {
     setMeals(mealsToUpdate);
 
     localStorage.setItem('meals', JSON.stringify(meals));
+  }
+
+  function clearStorage() {
+    setMeals(burguers);
+
+    localStorage.setItem('meals', JSON.stringify(burguers));
   }
 
   return (
@@ -61,26 +71,26 @@ function App() {
           </a>
         </div>
       </div>
-      <div className='bg-yellow-500 w-full h-60 justify-center items-center flex flex-col'>
+      <div className='bg-yellow-500 w-full h-full justify-center items-center flex flex-col'>
         <div className='h-20 text-2xl text-center pt-6'>Rodízio House Burguer</div>
-        <table>
-          <thead><tr><td>Lanche</td><td></td><td>Qtde</td><td></td></tr></thead>
+        <table className='mt-7 mb-7'>
+          <thead><tr><td className='font-bold flex justify-center'>Lanche</td><td></td><td className='font-bold  flex justify-center'>Qtde</td><td></td></tr></thead>
           <tbody>
           {
             meals.map((meal, index) => {
               return (
                 <tr key={meal.id}>
-                    <td>{ meal.name } </td>
-                    <td><button className='w-10 text-yellow-400 bg-black' onClick={() => { setCount(index, -1)}}>-</button> </td>
+                    <td className='w-48'>{ meal.name } </td>
+                    <td><button className='w-10 text-yellow-400 bg-black font-bold rounded-md' onClick={() => { setCount(index, -1)}}>-</button> </td>
                     <td className='w-10'><label className='flex justify-center'>{ meal.count }</label> </td>
-                    <td><button className='w-10 text-yellow-400 bg-black' onClick={() => { setCount(index, 1)}}>+</button> </td>
+                    <td><button className='w-10 text-yellow-400 bg-black font-bold rounded-md' onClick={() => { setCount(index, 1)}}>+</button> </td>
                 </tr>
               )
             })
           }
           </tbody>
         </table>
-        {/* <button className='bg-black text-yellow-400 hover:bg-gray-700 w-60 border-2 border-gray-700'>Adicionar Lanche</button> */}
+        <button className='bg-black text-yellow-400 hover:bg-gray-700 w-60 border-2 border-gray-700 mt-7 mb-7' onClick={() => { clearStorage() }}>Apagar Pedidos</button>
       </div>
     </>
   )
