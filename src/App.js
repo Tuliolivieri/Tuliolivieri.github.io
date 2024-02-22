@@ -2,6 +2,7 @@ import { InstagramLogo, LinkedinLogo, GithubLogo, EnvelopeSimple } from 'phospho
 
 import './App.css';
 import RodizioHB from './components/house-burguer';
+import MarcadorDeTruco from './components/marcador-de-truco';
 
 function App() {
     
@@ -23,7 +24,7 @@ function App() {
           </a>
         </div>
       </div>
-      <RodizioHB />
+      <MarcadorDeTruco />
     </>
   )
 }
